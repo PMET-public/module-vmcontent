@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="MagentoEse_VMContent">
+        <sequence>
+            <module name="MagentoEse_CustomerSampleData"/>
+            <module name="MagentoEse_AdminConfigurations"/>
+            <module name="MagentoEse_DemoAdminConfigurations"/>
+            <module name="MagentoEse_LumaDECms"/>
+            <module name="MagentoEse_CmsSampleDataUpdate"/>
+        </sequence>
+    </module>
+</config>

@@ -1,0 +1,2 @@
+store,name,url_key,path,active,is_anchor,include_in_menu,position,page_layout,display_mode,landing_page,custom_layout_update,conditions_serialized
+default,Featured Products,featured-products,Promotions,1,1,0,5,,,,,"[{""attribute"":""featured_product"",""operator"":""eq"",""value"":""Yes"",""logic"":""OR""}]"
