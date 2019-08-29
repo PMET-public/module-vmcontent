@@ -100,8 +100,10 @@ class Staging
                 $row = $data;
                 $newDates = $this->adjustDates($row['start_date'],$row['end_date']);
 
+                //get year from date to add to campaign name
+                $year = substr($newDates['startDate'],0,4);
 
-                $campaign = $this->addCampaign($row['name'],$newDates['startDate'],$newDates['endDate']);
+                $campaign = $this->addCampaign($year.' '.$row['name'],$newDates['startDate'],$newDates['endDate']);
                 //include file of elements to update
                 $contentFiles = explode(",",$row['content_files']);
                 foreach($contentFiles as $contentFile) {
