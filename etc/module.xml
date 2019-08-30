@@ -8,6 +8,7 @@
             <module name="MagentoEse_DemoAdminConfigurations"/>
             <module name="MagentoEse_LumaDECms"/>
             <module name="MagentoEse_CmsSampleDataUpdate"/>
+            <module name="MagentoEse_VeniaSetup"/>
         </sequence>
     </module>
 </config>
