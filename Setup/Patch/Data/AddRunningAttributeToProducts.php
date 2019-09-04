@@ -6,7 +6,7 @@
 
 namespace MagentoEse\VMContent\Setup\Patch\Data;
 
-use Magentoese\VMContent\Model\ProductAttributes;
+use MagentoEse\VMContent\Model\ProductAttributes;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
 class AddRunningAttributeToProducts implements DataPatchInterface

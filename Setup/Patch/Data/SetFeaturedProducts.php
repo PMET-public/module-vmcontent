@@ -8,8 +8,8 @@ namespace MagentoEse\VMContent\Setup\Patch\Data;
 
 
 use Magento\Catalog\Api\ProductRepositoryInterface;
-use Magentoese\VMContent\Model\ReplaceIds;
-use Magentoese\VMContent\Model\Category;
+use MagentoEse\VMContent\Model\ReplaceIds;
+use MagentoEse\VMContent\Model\Category;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Eav\Setup\EavSetupFactory;
@@ -17,7 +17,7 @@ use Magento\VisualMerchandiser\Model\Rules\Factory;
 use Magento\Config\Model\ResourceModel\Config as ResourceConfig;
 use Magento\VisualMerchandiser\Model\Rules\RuleInterfaceFactory as RuleInterfaceFactory;
 use Magento\Framework\App\Config\ScopeConfigInterface as ScopeConfig;
-use Magentoese\VMContent\Model\SetSession;
+use MagentoEse\VMContent\Model\SetSession;
 
 class SetFeaturedProducts implements DataPatchInterface
 {

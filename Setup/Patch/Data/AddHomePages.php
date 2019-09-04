@@ -7,7 +7,7 @@
 namespace MagentoEse\VMContent\Setup\Patch\Data;
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
-use Magentoese\VMContent\Model\Page;
+use MagentoEse\VMContent\Model\Page;
 
 class AddHomePages implements DataPatchInterface
 {

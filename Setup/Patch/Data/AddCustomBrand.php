@@ -31,17 +31,17 @@ class AddCustomBrand implements DataPatchInterface
     public function apply()
     {
         //Create Store
-        $storeId = $this->storeCreate->setup('Custom','custom_b2c_store','Custom B2C Store',
-            'custom_b2c_us','Custom US English',true,15);
+        //$storeId = $this->storeCreate->setup('Custom','custom_b2c_store','Custom B2C Store',
+        //    'custom_b2c_us','Custom US English',true,15);
         //Assign theme to store
-        $this->storeCreate->addThemeToStore('frontend/Custom/blank',$storeId);
+        //$this->storeCreate->addThemeToStore('frontend/Custom/blank',$storeId);
         //load new page
-        $this->page->install(['MagentoEse_VMContent::fixtures/custom_homepage.csv']);
+       // $this->page->install(['MagentoEse_VMContent::fixtures/custom_homepage.csv']);
         //add homepage to site
-        $this->storeCreate->setHomepage('custom-home',$storeId,'stores');
+        //$this->storeCreate->setHomepage('custom-home',$storeId,'stores');
 
         //create and generate sitemap
-        $this->storeCreate->createSitemap(4,'custom.xml','/pub/');
+        //$this->storeCreate->createSitemap(4,'custom.xml','/pub/');
 
     }
 

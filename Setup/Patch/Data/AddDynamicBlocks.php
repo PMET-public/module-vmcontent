@@ -7,7 +7,7 @@
 namespace MagentoEse\VMContent\Setup\Patch\Data;
 
 
-use Magentoese\VMContent\Model\Banner;
+use MagentoEse\VMContent\Model\Banner;
 use Magento\Framework\Setup\Patch\DataPatchInterface;
 
 class AddDynamicBlocks implements DataPatchInterface

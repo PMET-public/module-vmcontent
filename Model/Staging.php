@@ -109,7 +109,7 @@ class Staging
                 foreach($contentFiles as $contentFile) {
                     $contentFileName = $this->fixtureManager->getFixture('MagentoEse_VMContent::fixtures/'.$contentFile);
 
-                    echo($contentFileName."\n");
+                    //echo($contentFileName."\n");
                     if (!file_exists($contentFileName)) {
                         throw new \Exception('Content File not found: ' . $contentFileName);
                     }
@@ -119,12 +119,13 @@ class Staging
 
                     foreach ($contentRows as $contentRow) {
                         $contentData = [];
-                        foreach ($contentRow as $key => $value) {
-                            $contentData[$contentHeader[$key]] = $value;
+                        foreach ($contentRow as $contentKey => $contentValue) {
+                            $contentData[$contentHeader[$contentKey]] = $contentValue;
                         }
                         $contentRow = $contentData;
                         switch ($contentData['type']) {
                             case "page":
+                                echo "filename--".$contentFileName."\n";
                                 $this->addPageToCampaign($contentRow, $campaign->getId());
                                 break;
                             case "block":
@@ -166,7 +167,9 @@ class Staging
             $schedule->setEndTime($endDate);
         }
         //Save the schedule
+        echo $startDate."--".$endDate."\n";
         $update = $this->updateRepositoryInterface->save($schedule);
+        echo "save\n";
         $version = $this->versionManagerFactory->create();
         $version->setCurrentVersionId($update->getId());
         return $update;
@@ -178,6 +181,7 @@ class Staging
         $pages = $this->pageRepository->getList($search)->getItems();
         //update
         foreach($pages as $page){
+            echo "id ".$page->getId()."--".$page->getTitle()."\n";
             $page->setContent($this->replaceIds->replaceAll($pageData['content']));
             $this->pageStaging->schedule($page,$stagingId);
         }
