@@ -15,10 +15,10 @@ use Magento\Customer\Model\Customer;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Cms\Api\Data\BlockInterface;
 use Magento\Cms\Api\BlockRepositoryInterface;
-use Magento\CustomerSegment\Model\ResourceModel\Segment\Collection as SegmentCollection;
+use Magento\CustomerSegment\Model\ResourceModel\Segment\CollectionFactory as SegmentCollection;
 use Magento\CustomerSegment\Model\Segment;
 use Magento\Store\Api\StoreRepositoryInterface;
-use Magento\Banner\Model\ResourceModel\Banner\Collection as BannerCollection;
+use Magento\Banner\Model\ResourceModel\Banner\CollectionFactory as BannerCollection;
 
 class ReplaceIds
 {
@@ -98,7 +98,7 @@ class ReplaceIds
 
     public function replaceSegments($content){
         /* use _segment_segmentname as token */
-        $segments = $this->segmentCollection->getItems();
+        $segments = $this->segmentCollection->create()->getItems();
        /** @var Segment $segment */
         foreach($segments as $segment){
             $content = str_replace("_segment_".$segment->getName(),$segment->getId(),$content);
@@ -157,7 +157,7 @@ class ReplaceIds
 
     public function replaceDynamicBlocks($content){
         /* use _banner_bannername as token */
-        $banners = $this->bannerCollection->getItems();
+        $banners = $this->bannerCollection->create()->getItems();
         /** @var \Magento\Banner\Model\Banner $banner */
         foreach($banners as $banner){
             $content = str_replace("_banner_".$banner->getName(),$banner->getId(),$content);

@@ -110,7 +110,7 @@ class Banner
                     $data[$header[$key]] = $value;
                 }
                 $row = $data;
-                /** @var BannerModel $banner */
+
 
                 //get existing banner to see if we need to create or update content for different store view
                 $bannerCollection = $this->bannerCollection->create();
@@ -122,17 +122,21 @@ class Banner
                 }else{
                     $banner = $this->bannerFactory->create();
                 }
-
+                /** @var BannerModel $banner */
                 $banner->setName($row['name']);
                 $banner->setIsEnabled(1);
                 $banner->setTypes($row['type']);
                 //$content = $this->replaceBlockIdentifiers($row['banner_content']);
-                $banner->setStoreContents([$this->replaceIds->getStoreidByCode($row['store'])=>$this->replaceIds->replaceAll($row['banner_content'])]);
-                $banner->save();
+
+                $banner->setStoreContents([$this->replaceIds->getStoreidByCode($row['store']) => $this->replaceIds->replaceAll($row['banner_content'])]);
+                $this->bannerResourceModel->save($banner);
                 //set default if this is a new banner
                 if($banners->count()==0) {
                     $this->bannerResourceModel->saveStoreContents($banner->getId(), ['0' => $this->replaceIds->replaceAll($row['banner_content'])]);
                 }
+                //set content for store
+               // $this->bannerResourceModel->saveStoreContents($banner->getId(), [$this->replaceIds->getStoreidByCode($row['store']) => $this->replaceIds->replaceAll($row['banner_content'])]);
+
                 $segments = explode(",",$row['segments']);
                 $segmentIds=[];
                 foreach($segments as $segment){

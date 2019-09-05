@@ -83,7 +83,7 @@ class Store
         $this->sitemapFactory = $sitemapFactory;
     }
 
-    public function setup($rootCategory,$storeCode,$storeName,$viewCode,$viewName,$viewActive,$viewSortOrder)
+    public function setup($rootCategory,$storeCode,$storeName,$viewCode,$viewName,$viewActive,$viewSortOrder,$assignView = false)
     {
         //create root catalog
         $rootCategoryId = $this->createCategory($rootCategory);
@@ -98,8 +98,11 @@ class Store
             //create view (store)
             $newStore = $this->createView($website, $group,$viewName,$viewCode,$viewActive,$viewSortOrder);
 
-            //assign view as default store
-            $group->setDefaultStoreId($newStore->getId());
+            //assign view as default store if required
+            if($assignView){
+                $group->setDefaultStoreId($newStore->getId());
+            }
+
             $this->groupResourceModel->save($group);
 
             return $newStore->getId();

@@ -125,7 +125,6 @@ class Staging
                         $contentRow = $contentData;
                         switch ($contentData['type']) {
                             case "page":
-                                echo "filename--".$contentFileName."\n";
                                 $this->addPageToCampaign($contentRow, $campaign->getId());
                                 break;
                             case "block":
@@ -167,9 +166,7 @@ class Staging
             $schedule->setEndTime($endDate);
         }
         //Save the schedule
-        echo $startDate."--".$endDate."\n";
         $update = $this->updateRepositoryInterface->save($schedule);
-        echo "save\n";
         $version = $this->versionManagerFactory->create();
         $version->setCurrentVersionId($update->getId());
         return $update;
@@ -181,8 +178,7 @@ class Staging
         $pages = $this->pageRepository->getList($search)->getItems();
         //update
         foreach($pages as $page){
-            echo "id ".$page->getId()."--".$page->getTitle()."\n";
-            $page->setContent($this->replaceIds->replaceAll($pageData['content']));
+             $page->setContent($this->replaceIds->replaceAll($pageData['content']));
             $this->pageStaging->schedule($page,$stagingId);
         }
     }
