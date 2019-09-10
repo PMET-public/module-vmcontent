@@ -33,7 +33,7 @@ class AddB2CSegments implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [AddRunnerCustomerAttribute::class,AddRunningAttributeToProducts::class,SetFeaturedProducts::class];
+        return [AddRunnerCustomerAttribute::class,AddRunningAttributeToProducts::class,SetFeaturedAndSaleProducts::class];
     }
 
     public function getAliases()

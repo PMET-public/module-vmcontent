@@ -231,6 +231,8 @@ class Category
                 ]);
                 $rule->save();
             }
+            //second save is to trigger rule to run to  populate category
+            $category->save();
 
         }
     }

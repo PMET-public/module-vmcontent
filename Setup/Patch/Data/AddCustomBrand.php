@@ -32,7 +32,7 @@ class AddCustomBrand implements DataPatchInterface
     {
         //Create Store
         $storeId = $this->storeCreate->setup('Custom','custom_b2c_store','Custom B2C Store',
-            'custom_b2c_us','Custom US English',true,15);
+            'custom_b2c_us','Custom US English',false,15);
         //Assign theme to store
         $this->storeCreate->addThemeToStore('frontend/Custom/blank',$storeId);
         //load new page
