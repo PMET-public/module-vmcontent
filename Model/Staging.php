@@ -10,6 +10,7 @@ use Magento\Cms\Api\PageRepositoryInterface;
 use Magento\CmsStaging\Api\BlockStagingInterface;
 use Magento\CmsStaging\Api\PageStagingInterface;
 use Magento\Framework\Api\SearchCriteriaBuilder;
+use Magento\Framework\Exception\ValidatorException;
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 use Magento\Staging\Api\Data\UpdateInterfaceFactory;
 use Magento\Staging\Api\UpdateRepositoryInterface;
@@ -82,7 +83,7 @@ class Staging
         $this->catalogRuleStaging = $catalogRuleStaging;
     }
 
-    public function addScheduledUpdates($updateType,$fixtures){
+    public function addScheduledUpdates($fixtures){
         foreach ($fixtures as $fileName) {
             $fileName = $this->fixtureManager->getFixture($fileName);
             if (!file_exists($fileName)) {
@@ -102,50 +103,54 @@ class Staging
 
                 //get year from date to add to campaign name
                 $year = substr($newDates['startDate'],0,4);
+                $campaignName = $year.' '.$row['name'];
+                //check for existing campaign and skip if it exists
+                $search = $this->searchCriteria->addFilter(UpdateInterface::NAME,$campaignName,'eq')->create();
+                $updates = $this->updateRepositoryInterface->getList($search)->getTotalCount();
+                if($updates == 0){
+                    $campaign = $this->addCampaign($campaignName,$newDates['startDate'],$newDates['endDate']);
+                    //include file of elements to update
+                    $contentFiles = explode(",",$row['content_files']);
+                    foreach($contentFiles as $contentFile) {
+                        $contentFileName = $this->fixtureManager->getFixture('MagentoEse_VMContent::fixtures/'.$contentFile);
 
-                $campaign = $this->addCampaign($year.' '.$row['name'],$newDates['startDate'],$newDates['endDate']);
-                //include file of elements to update
-                $contentFiles = explode(",",$row['content_files']);
-                foreach($contentFiles as $contentFile) {
-                    $contentFileName = $this->fixtureManager->getFixture('MagentoEse_VMContent::fixtures/'.$contentFile);
-
-                    //echo($contentFileName."\n");
-                    if (!file_exists($contentFileName)) {
-                        throw new \Exception('Content File not found: ' . $contentFileName);
-                    }
-
-                    $contentRows = $this->csvReader->getData($contentFileName);
-                    $contentHeader = array_shift($contentRows);
-
-                    foreach ($contentRows as $contentRow) {
-                        $contentData = [];
-                        foreach ($contentRow as $contentKey => $contentValue) {
-                            $contentData[$contentHeader[$contentKey]] = $contentValue;
+                        //echo($contentFileName."\n");
+                        if (!file_exists($contentFileName)) {
+                            throw new \Exception('Content File not found: ' . $contentFileName);
                         }
-                        $contentRow = $contentData;
-                        switch ($contentData['type']) {
-                            case "page":
-                                $this->addPageToCampaign($contentRow, $campaign->getId());
-                                break;
-                            case "block":
-                                echo "block";
-                                break;
-                            case "product":
-                                echo "product";
-                                break;
-                            case "catalogrule":
-                                $this->addCatalogRuleToCampaign($contentRow,$campaign->getId());
-                                break;
-                            case "cartrule":
-                                echo "cartrule";
-                                break;
-                            case "category":
-                                echo "category";
-                                break;
+
+                        $contentRows = $this->csvReader->getData($contentFileName);
+                        $contentHeader = array_shift($contentRows);
+
+                        foreach ($contentRows as $contentRow) {
+                            $contentData = [];
+                            foreach ($contentRow as $contentKey => $contentValue) {
+                                $contentData[$contentHeader[$contentKey]] = $contentValue;
+                            }
+                            $contentRow = $contentData;
+                            switch ($contentData['type']) {
+                                case "page":
+                                    $this->addPageToCampaign($contentRow, $campaign->getId());
+                                    break;
+                                case "block":
+                                    echo "block";
+                                    break;
+                                case "product":
+                                    echo "product";
+                                    break;
+                                case "catalogrule":
+                                    $this->addCatalogRuleToCampaign($contentRow,$campaign->getId());
+                                    break;
+                                case "cartrule":
+                                    echo "cartrule";
+                                    break;
+                                case "category":
+                                    echo "category";
+                                    break;
+                            }
                         }
                     }
                 }
-
             }
         }
     }
@@ -157,6 +162,7 @@ class Staging
      * @return UpdateInterface
      */
     public function addCampaign($campaignName, $startDate, $endDate){
+
         /** @var UpdateInterface $schedule */
         $schedule = $this->updateInterfaceFactory->create();
         $schedule->setName($campaignName);
@@ -179,7 +185,11 @@ class Staging
         //update
         foreach($pages as $page){
              $page->setContent($this->replaceIds->replaceAll($pageData['content']));
-            $this->pageStaging->schedule($page,$stagingId);
+             try {
+                 $this->pageStaging->schedule($page, $stagingId);
+             }catch(ValidatorException $e){
+                 //ignore as it indicated already scheduled
+             }
         }
     }
 
@@ -188,7 +198,12 @@ class Staging
         $ruleCollection =  $this->catalogRuleCollection->create();
         $rule = $ruleCollection->addFilter('name',$ruleData['identifier'],'eq')->getFirstItem();
         $rule->setIsActive(1);
-        $this->catalogRuleStaging->schedule($rule,$stagingId);
+        try {
+            $this->catalogRuleStaging->schedule($rule,$stagingId);
+        }catch(ValidatorException $e){
+            //ignore as it indicated already scheduled
+        }
+
 
     }
 

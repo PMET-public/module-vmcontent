@@ -24,7 +24,7 @@ class AddScheduledHomePageChanges implements DataPatchInterface
 
     public function apply()
     {
-        $this->staging->addScheduledUpdates('page',['MagentoEse_VMContent::fixtures/homepageCampaign/homepage_campaign.csv']);
+        $this->staging->addScheduledUpdates(['MagentoEse_VMContent::fixtures/homepageCampaign/homepage_campaign.csv']);
     }
 
     public static function getDependencies()

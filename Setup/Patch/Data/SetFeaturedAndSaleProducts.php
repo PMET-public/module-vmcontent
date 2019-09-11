@@ -68,6 +68,8 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
 
     public function apply(){
         $this->featuredProduct();
+        $this->updateSaleAttribute();
+
     }
 
 
@@ -128,5 +130,15 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
         $this->productImport->install(['MagentoEse_VMContent::fixtures/featured_sale.csv']);
 
         $this->category->install(['MagentoEse_VMContent::fixtures/featured_category.csv']);
+    }
+
+    private function updateSaleAttribute()
+    {
+        //add sale attribute as filterable and searchable on product grid
+        /** @var \Magento\Eav\Setup\EavSetup $eavSetup */
+        $eavSetup = $this->eavSetup->create();
+        $eavSetup->updateAttribute(\Magento\Catalog\Model\Product::ENTITY, 'sale', 'is_used_in_grid', true);
+        $eavSetup->updateAttribute(\Magento\Catalog\Model\Product::ENTITY, 'sale', 'is_filterable_in_grid', true);
+        $eavSetup->updateAttribute(\Magento\Catalog\Model\Product::ENTITY, 'sale', 'is_used_for_promo_rules', true);
     }
 }
