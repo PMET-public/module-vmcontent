@@ -76,7 +76,7 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [];
+        return [ProductUpdates::class];
     }
 
     public function getAliases()
@@ -86,6 +86,7 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
 
     public function featuredProduct()
     {
+        echo "installing " , get_class($this) , "\n";
         ///add featured product attribute
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetup->create();

@@ -27,7 +27,7 @@ class AddDynamicBlocks implements DataPatchInterface
     }
 
     public function apply(){
-       $this->banner->install(['MagentoEse_VMContent::fixtures/dynamic_blocks.csv']);
+        $this->banner->install(['MagentoEse_VMContent::fixtures/dynamic_blocks.csv']);
     }
 
     public static function getDependencies()

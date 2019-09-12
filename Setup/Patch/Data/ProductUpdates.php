@@ -60,6 +60,7 @@ class ProductUpdates implements DataPatchInterface
             //->setStoreId($product->getStoreId())
             ->addData($optionArray);
         $option->save();
+        $product->addOption($option);
         $this->productRepository->save($product);
     }
 
