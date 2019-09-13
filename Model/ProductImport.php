@@ -19,6 +19,11 @@ class ProductImport
     protected $eavConfig;
     protected $objectManager;
 
+    /**
+     * ProductImport constructor.
+     * @param SampleDataContext $sampleDataContext
+     * @param ObjectManagerInterface $objectManager
+     */
     public function __construct(
         SampleDataContext $sampleDataContext,
         ObjectManagerInterface $objectManager

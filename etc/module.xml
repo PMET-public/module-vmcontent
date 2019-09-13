@@ -9,6 +9,9 @@
             <module name="MagentoEse_LumaDECms"/>
             <module name="MagentoEse_CmsSampleDataUpdate"/>
             <module name="MagentoEse_VeniaSetup"/>
+            <module name="Magento_CatalogSampleData"/>
+            <module name="Magento_ConfigurableSampleData"/>
+            <module name="MagentoEse_MsiInventorySampleDataDemo"/>
         </sequence>
     </module>
 </config>

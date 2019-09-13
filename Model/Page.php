@@ -30,6 +30,13 @@ class Page
     /** @var StoreRepositoryInterface  */
     private $storeRepository;
 
+    /**
+     * Page constructor.
+     * @param SampleDataContext $sampleDataContext
+     * @param PageInterfaceFactory $pageInterfaceFactory
+     * @param \MagentoEse\VMContent\Model\ReplaceIds $replaceIds
+     * @param StoreRepositoryInterface $storeRepository
+     */
     public function __construct( SampleDataContext $sampleDataContext,PageInterfaceFactory $pageInterfaceFactory,
                                  ReplaceIds $replaceIds, StoreRepositoryInterface $storeRepository)
     {

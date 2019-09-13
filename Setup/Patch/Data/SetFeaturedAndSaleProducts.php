@@ -48,6 +48,19 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
 
     /** @var ProductImport  */
     private $productImport;
+
+    /**
+     * SetFeaturedAndSaleProducts constructor.
+     * @param ReplaceIds $replaceIds
+     * @param EavSetupFactory $eavSetup
+     * @param Category $category
+     * @param Factory $rules
+     * @param RuleInterfaceFactory $ruleInterfaceFactory
+     * @param ResourceConfig $resourceConfig
+     * @param ScopeConfig $scopeConfig
+     * @param SetSession $setSession
+     * @param ProductImport $productImport
+     */
     public function __construct(ReplaceIds $replaceIds, EavSetupFactory $eavSetup,Category $category,
                                 Factory $rules, RuleInterfaceFactory $ruleInterfaceFactory, ResourceConfig $resourceConfig,
                                 ScopeConfig $scopeConfig, SetSession $setSession, ProductImport $productImport)
@@ -63,16 +76,10 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
         $this->productImport = $productImport;
     }
 
-
-
-
     public function apply(){
         $this->featuredProduct();
         $this->updateSaleAttribute();
-
     }
-
-
 
     public static function getDependencies()
     {
@@ -86,7 +93,6 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
 
     public function featuredProduct()
     {
-        echo "installing " , get_class($this) , "\n";
         ///add featured product attribute
         /** @var EavSetup $eavSetup */
         $eavSetup = $this->eavSetup->create();

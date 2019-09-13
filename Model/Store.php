@@ -62,6 +62,22 @@ class Store
     /** @var SitemapFactory  */
     protected $sitemapFactory;
 
+    /**
+     * Store constructor.
+     * @param CategoryInterfaceFactory $categoryFactory
+     * @param CategoryRepositoryInterface $categoryRepository
+     * @param WebsiteRepositoryInterface $websiteRepository
+     * @param GroupInterfaceFactory $groupInterface
+     * @param GroupRepositoryInterface $groupRepositoryInterface
+     * @param GroupResourceModel $groupResourceModel
+     * @param StoreRepositoryInterface $storeRepository
+     * @param StoreFactory $storeFactory
+     * @param ThemeRegistration $themeRegistration
+     * @param ThemeCollection $themeCollection
+     * @param ResourceConfig $resourceConfig
+     * @param SitemapFactory $sitemapFactory
+     */
+
     public function __construct(CategoryInterfaceFactory $categoryFactory, CategoryRepositoryInterface $categoryRepository,
                                 WebsiteRepositoryInterface $websiteRepository, GroupInterfaceFactory $groupInterface,
                                 GroupRepositoryInterface $groupRepositoryInterface, GroupResourceModel $groupResourceModel,

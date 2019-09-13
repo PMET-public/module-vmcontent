@@ -36,7 +36,7 @@ class Segment
      * Segment constructor.
      * @param SampleDataContext $sampleDataContext
      * @param SegmentFactory $segment
-     * @param \MagentoEse\VMContent\Model\ReplaceIds $replaceIds
+     * @param ReplaceIds $replaceIds
      */
 
     public function __construct(

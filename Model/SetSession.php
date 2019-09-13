@@ -11,8 +11,11 @@ use Magento\Framework\App\Area;
 
 class SetSession
 {
-    /** @var State */
-    private $state;
+
+    /**
+     * SetSession constructor.
+     * @param State $state
+     */
     public function __construct(State $state)
     {
         try{

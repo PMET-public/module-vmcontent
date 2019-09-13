@@ -27,6 +27,12 @@ class Bookmark
      */
     private $csvReader;
 
+    /**
+     * Bookmark constructor.
+     * @param BookmarkInterfaceFactory $bookmarkInterfaceFactory
+     * @param BookmarkRepositoryInterface $bookmarkRepository
+     * @param SampleDataContext $sampleDataContext
+     */
     public function __construct(BookmarkInterfaceFactory $bookmarkInterfaceFactory, BookmarkRepositoryInterface $bookmarkRepository,
                                 SampleDataContext $sampleDataContext)
     {
@@ -36,7 +42,10 @@ class Bookmark
         $this->csvReader = $sampleDataContext->getCsvReader();
     }
 
-
+    /**
+     * @param array $fixtures
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
     public function install(array $fixtures)
     {
         foreach ($fixtures as $fileName) {

@@ -17,6 +17,10 @@ class AddScheduledHomePageChanges implements DataPatchInterface
     /** @var Staging  */
     private $staging;
 
+    /**
+     * AddScheduledHomePageChanges constructor.
+     * @param Staging $staging
+     */
     public function __construct(Staging $staging)
     {
         $this->staging = $staging;

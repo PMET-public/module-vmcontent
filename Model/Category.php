@@ -7,6 +7,12 @@ namespace MagentoEse\VMContent\Model;
 
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 use Magento\VisualMerchandiser\Model\Rules;
+use Magento\Catalog\Api\Data\CategoryInterfaceFactory;
+use Magento\Catalog\Model\ResourceModel\Category\TreeFactory;
+use Magento\Store\Model\StoreManagerInterface;
+use Magento\Store\Api\Data\StoreInterfaceFactory;
+use Magento\Cms\Api\Data\BlockInterfaceFactory;
+use \Magento\Framework\Data\Tree\Node;
 /**
  * Class Category
  */
@@ -18,47 +24,54 @@ class Category
     protected $fixtureManager;
 
     /**
-     * @var \Magento\Catalog\Api\Data\CategoryInterfaceFactory
+     * @var CategoryInterfaceFactory
      */
     protected $categoryFactory;
 
     /**
-     * @var \Magento\Store\Model\StoreManagerInterface
+     * @var StoreManagerInterface
      */
     protected $storeManager;
 
     /**
-     * @var \Magento\Catalog\Model\ResourceModel\Category\TreeFactory
+     * @var TreeFactory
      */
     protected $resourceCategoryTreeFactory;
 
 
     /**
-     * @var \Magento\Framework\Data\Tree\Node
+     * @var Node
      */
     protected $categoryTree;
 
     /**
-     * @var \Magento\Store\Api\Data\StoreInterfaceFactory
+     * @var StoreInterfaceFactory
      */
     protected $storeFactory;
 
     /**
-     * @var \Magento\Cms\Api\Data\BlockInterfaceFactory
+     * @var BlockInterfaceFactory
      */
     protected $blockFactory;
 
     /** @var Rules  */
     protected $rules;
 
+    /**
+     * Category constructor.
+     * @param SampleDataContext $sampleDataContext
+     * @param CategoryInterfaceFactory $categoryFactory
+     * @param TreeFactory $resourceCategoryTreeFactory
+     * @param StoreManagerInterface $storeManager
+     * @param StoreInterfaceFactory $storeFactory
+     * @param BlockInterfaceFactory $blockFactory
+     * @param Rules $rules
+     */
 
     public function __construct(
-        SampleDataContext $sampleDataContext,
-        \Magento\Catalog\Api\Data\CategoryInterfaceFactory $categoryFactory,
-        \Magento\Catalog\Model\ResourceModel\Category\TreeFactory $resourceCategoryTreeFactory,
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Store\Api\Data\StoreInterfaceFactory $storeFactory,
-        \Magento\Cms\Api\Data\BlockInterfaceFactory $blockFactory,
+        SampleDataContext $sampleDataContext, CategoryInterfaceFactory $categoryFactory,
+        TreeFactory $resourceCategoryTreeFactory, StoreManagerInterface $storeManager,
+        StoreInterfaceFactory $storeFactory, BlockInterfaceFactory $blockFactory,
         Rules $rules
     ) {
         $this->fixtureManager = $sampleDataContext->getFixtureManager();

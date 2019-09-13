@@ -25,6 +25,13 @@ class ProductAttributes
     /** @var ReplaceIds  */
     private $replaceIds;
 
+    /**
+     * ProductAttributes constructor.
+     * @param SampleDataContext $sampleDataContext
+     * @param ProductRepositoryInterface $productRepository
+     * @param ReplaceIds $replaceIds
+     * @param SetSession $setSession
+     */
     public function __construct( SampleDataContext $sampleDataContext,
                                  ProductRepositoryInterface $productRepository,
                                  ReplaceIds $replaceIds,

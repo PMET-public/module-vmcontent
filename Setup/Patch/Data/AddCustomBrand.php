@@ -21,7 +21,12 @@ class AddCustomBrand implements DataPatchInterface
     /** @var Page  */
     protected $page;
 
-
+    /**
+     * AddCustomBrand constructor.
+     * @param StoreCreate $storeCreate
+     * @param Page $page
+     * @param SetSession $session
+     */
     public function __construct(StoreCreate $storeCreate, Page $page, SetSession $session)
     {
         $this->storeCreate = $storeCreate;

@@ -20,6 +20,11 @@ class UpdateAdminSettings implements DataPatchInterface
     /** @var ScopeConfig  */
     private $scopeConfig;
 
+    /**
+     * UpdateAdminSettings constructor.
+     * @param ResourceConfig $resourceConfig
+     * @param ScopeConfig $scopeConfig
+     */
     public function __construct(ResourceConfig $resourceConfig, ScopeConfig $scopeConfig)
     {
         $this->resourceConfig = $resourceConfig;
