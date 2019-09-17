@@ -4,4 +4,4 @@ name,start_date,end_date,content_files
 "Black Friday Sale","2019-11-29 06:00:00","2019-11-30 05:59:59","homepageCampaign/black_friday_content.csv,homepageCampaign/black_friday_catalog_rule.csv"
 "Holiday Campaign","2019-12-15 06:00:00","2020-01-01 05:59:59","homepageCampaign/holiday_campaign_content.csv"
 "Valentine's Day Campaign","2020-02-14 06:00:00","2020-02-15 05:59:59","homepageCampaign/valentines_campaign_content.csv"
-"Fourth of July Sale","2020-07-04 06:00:00","2020-07-05 05:59:59","homepageCampaign/julyfourth_campaign_content.csv"
+"Fourth of July Sale","2020-07-04 06:00:00","2020-07-05 05:59:59","homepageCampaign/julyfourth_campaign_content.csv,homepageCampaign/julyfourth_catalog_rule.csv"
