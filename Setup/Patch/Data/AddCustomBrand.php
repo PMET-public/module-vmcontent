@@ -8,6 +8,7 @@ namespace MagentoEse\VMContent\Setup\Patch\Data;
 
 
 use Magento\Framework\Setup\Patch\DataPatchInterface;
+use Magento\Setup\Exception;
 use MagentoEse\VMContent\Model\Store as StoreCreate;
 use MagentoEse\VMContent\Model\Page;
 use Magento\Sitemap\Model\SitemapFactory;
@@ -35,18 +36,20 @@ class AddCustomBrand implements DataPatchInterface
 
     public function apply()
     {
-        //Create Store
-        $storeId = $this->storeCreate->setup('Custom','custom_b2c_store','Custom B2C Store',
-            'custom_b2c_us','Custom US English',false,15);
-        //Assign theme to store
-        $this->storeCreate->addThemeToStore('frontend/Custom/blank',$storeId);
-        //load new page
-        $this->page->install(['MagentoEse_VMContent::fixtures/custom_homepage.csv']);
-        //add homepage to site
-        $this->storeCreate->setHomepage('custom-home',$storeId,'stores');
 
-        //create and generate sitemap
-        $this->storeCreate->createSitemap(4,'custom.xml','/pub/');
+            //Create Store
+            $storeId = $this->storeCreate->setup('Custom', 'custom_b2c_store', 'Custom B2C Store',
+                'custom_b2c_us', 'Custom US English', false, 15);
+            //Assign theme to store
+            $this->storeCreate->addThemeToStore('frontend/Custom/blank', $storeId);
+            //load new page
+            $this->page->install(['MagentoEse_VMContent::fixtures/custom_homepage.csv']);
+            //add homepage to site
+            $this->storeCreate->setHomepage('custom-home', $storeId, 'stores');
+
+            //create and generate sitemap
+            $this->storeCreate->createSitemap(4, 'custom.xml', '/pub/');
+
 
     }
 

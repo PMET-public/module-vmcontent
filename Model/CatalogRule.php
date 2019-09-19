@@ -5,12 +5,16 @@
  */
 namespace MagentoEse\VMContent\Model;
 
+use Magento\CatalogRule\Api\CatalogRuleRepositoryInterface;
+use Magento\CatalogRule\Model\Rule;
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
-use Magento\CatalogRule\Model\RuleFactory as RuleFactory;
-use Magento\CatalogRule\Model\Rule\JobFactory as JobFactory;
+use Magento\CatalogRule\Model\RuleFactory;
+use Magento\CatalogRule\Model\Rule\JobFactory;
 use Magento\Framework\Serialize\Serializer\Json;
 use Magento\Framework\App\ObjectManager;
 use MagentoEse\VMContent\Model\ReplaceIds;
+use Magento\CatalogRule\Api\Data\RuleInterface;
+
 
 /**
  *  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -60,6 +64,8 @@ class CatalogRule
     /** @var ReplaceIds  */
     protected $replaceIds;
 
+    /** @var CatalogRuleRepositoryInterface  */
+    protected $catalogRuleRepository;
 
     /**
      * CatalogRule constructor.
@@ -79,7 +85,7 @@ class CatalogRule
         \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Magento\Customer\Model\GroupFactory $groupFactory,
         \Magento\Store\Model\WebsiteFactory $websiteFactory,
-        ReplaceIds $replaceIds,
+        ReplaceIds $replaceIds, CatalogRuleRepositoryInterface $catalogRuleRepository,
         Json $serializer = null
 
     ) {
@@ -92,6 +98,7 @@ class CatalogRule
         $this->websiteFactory = $websiteFactory;
         $this->serializer = $serializer ?: ObjectManager::getInstance()->get(Json::class);
         $this->replaceIds = $replaceIds;
+        $this->catalogRuleRepository = $catalogRuleRepository;
     }
 
     /**
@@ -115,13 +122,19 @@ class CatalogRule
                     $data[$header[$key]] = $value;
                 }
                 $row = $data;
-                $row['customer_group_ids'] = $this->getGroupIds();
-                $row['website_ids'] = $this->getWebsiteIds();
-                $row['conditions_serialized'] = $this->convertSerializedData($this->replaceIds->replaceAll($row['conditions_serialized']));
-                $row['actions_serialized'] = $this->convertSerializedData($this->replaceIds->replaceAll($row['actions_serialized']));
-                $ruleModel = $this->ruleFactory->create();
-                $ruleModel->loadPost($row);
-                $ruleModel->save();
+                /** @var Rule $ruleCheck */
+                $ruleCheck = $this->ruleFactory->create();
+                $ruleCount = $ruleCheck->getCollection()->addFilter(RuleInterface::NAME,$row['name'],'eq');
+
+                if(!$ruleCount->getSize()) {
+                    $row['customer_group_ids'] = $this->getGroupIds();
+                    $row['website_ids'] = $this->getWebsiteIds();
+                    $row['conditions_serialized'] = $this->convertSerializedData($this->replaceIds->replaceAll($row['conditions_serialized']));
+                    $row['actions_serialized'] = $this->convertSerializedData($this->replaceIds->replaceAll($row['actions_serialized']));
+                    $ruleModel = $this->ruleFactory->create();
+                    $ruleModel->loadPost($row);
+                    $ruleModel->save();
+                }
             }
         }
         $ruleJob = $this->jobFactory->create();

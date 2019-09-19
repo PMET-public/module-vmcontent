@@ -7,6 +7,7 @@ namespace MagentoEse\VMContent\Model;
 
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 use Magento\CustomerSegment\Model\SegmentFactory;
+use Magento\CustomerSegment\Model\Segment as SegmentModel;
 use MagentoEse\VMContent\Model\ReplaceIds;
 
 /**
@@ -32,6 +33,7 @@ class Segment
     /** @var \MagentoEse\VMContent\Model\ReplaceIds  */
     private $replaceIds;
 
+
     /**
      * Segment constructor.
      * @param SampleDataContext $sampleDataContext
@@ -40,9 +42,7 @@ class Segment
      */
 
     public function __construct(
-        SampleDataContext $sampleDataContext,
-        SegmentFactory $segment,
-        ReplaceIds $replaceIds
+        SampleDataContext $sampleDataContext, SegmentFactory $segment, ReplaceIds $replaceIds
     ) {
         $this->fixtureManager = $sampleDataContext->getFixtureManager();
         $this->csvReader = $sampleDataContext->getCsvReader();
@@ -71,20 +71,25 @@ class Segment
                 }
                 $row = $data;
 
+                /** @var SegmentModel $segment */
                 $segment = $this->segment->create();
-                $segment->addData(['website_ids'=>[1]]);
-                $segment->setName($row['name']);
-                $conditions = $this->replaceIds->replaceCategories($row['conditions_serialized']);
-                $conditions = $this->replaceIds->replaceCustomerAttributes($conditions);
-                $conditions = $this->replaceIds->replaceProductAttributes($conditions);
-                $conditions = $this->replaceIds->replaceAttributeSets($conditions);
-                $conditions = $this->replaceIds->replaceCustomerGroups($conditions);
-                $segment->setConditionsSerialized($conditions);
-                //$segment->setConditionSql($row['sql']);
-                $segment->setIsActive($row['is_active']);
-                $segment->addData(['apply_to'=>$data['apply_to']]);
-                $segment->save();
-                $segment->matchCustomers();
+                $ruleCount = $segment->getCollection()->addFilter('name',$row['name'],'eq');
+
+                if(!$ruleCount->getSize()) {
+                    $segment->addData(['website_ids' => [1]]);
+                    $segment->setName($row['name']);
+                    $conditions = $this->replaceIds->replaceCategories($row['conditions_serialized']);
+                    $conditions = $this->replaceIds->replaceCustomerAttributes($conditions);
+                    $conditions = $this->replaceIds->replaceProductAttributes($conditions);
+                    $conditions = $this->replaceIds->replaceAttributeSets($conditions);
+                    $conditions = $this->replaceIds->replaceCustomerGroups($conditions);
+                    $segment->setConditionsSerialized($conditions);
+                    //$segment->setConditionSql($row['sql']);
+                    $segment->setIsActive($row['is_active']);
+                    $segment->addData(['apply_to' => $data['apply_to']]);
+                    $segment->save();
+                    $segment->matchCustomers();
+                }
             }
         }
 
