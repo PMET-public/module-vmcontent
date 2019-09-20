@@ -79,6 +79,7 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
     public function apply(){
         echo "installing " , get_class($this) , "\n";
         $this->featuredProduct();
+        echo "featured product installed\n";
         $this->updateSaleAttribute();
     }
 
@@ -134,9 +135,9 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
         $currentValue = $this->scopeConfig->getValue('visualmerchandiser/options/smart_attributes', ScopeConfig::SCOPE_TYPE_DEFAULT);
         $this->resourceConfig->saveConfig('visualmerchandiser/options/smart_attributes', $currentValue . ",sale," . $attributeCode, ScopeConfig::SCOPE_TYPE_DEFAULT, 0);
 
-
+        echo "attribute installed\n";
         $this->productImport->install(['MagentoEse_VMContent::fixtures/featured_sale.csv']);
-
+        echo "product attributes updated\n";
         $this->category->install(['MagentoEse_VMContent::fixtures/featured_category.csv']);
     }
 
