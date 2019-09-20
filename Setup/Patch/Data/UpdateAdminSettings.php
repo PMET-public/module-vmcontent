@@ -34,6 +34,7 @@ class UpdateAdminSettings implements DataPatchInterface
     public function apply()
     {
         //set customer to redirect to account dashboard after login
+        echo "installing " , get_class($this) , "\n";
         $this->resourceConfig->saveConfig('customer/startup/redirect_dashboard', 1, ScopeConfig::SCOPE_TYPE_DEFAULT, 0);
 
     }

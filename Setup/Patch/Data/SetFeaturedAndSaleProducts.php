@@ -77,6 +77,7 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
     }
 
     public function apply(){
+        echo "installing " , get_class($this) , "\n";
         $this->featuredProduct();
         $this->updateSaleAttribute();
     }
