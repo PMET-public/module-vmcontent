@@ -138,7 +138,7 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
         echo "attribute installed\n";
         $this->productImport->install(['MagentoEse_VMContent::fixtures/featured_sale.csv']);
         echo "product attributes updated\n";
-        $this->category->install(['MagentoEse_VMContent::fixtures/featured_category.csv']);
+       // $this->category->install(['MagentoEse_VMContent::fixtures/featured_category.csv']);
     }
 
     private function updateSaleAttribute()
