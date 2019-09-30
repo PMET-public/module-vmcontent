@@ -48,7 +48,8 @@ class AddCustomBrand implements DataPatchInterface
             $this->storeCreate->setHomepage('custom-home', $storeId, 'stores');
 
             //create and generate sitemap
-            $this->storeCreate->createSitemap(4, 'custom.xml', '/pub/');
+            //removed as it wont work on cloud
+            //$this->storeCreate->createSitemap(4, 'custom.xml', '/pub/');
 
 
     }
