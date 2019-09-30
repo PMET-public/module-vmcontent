@@ -33,7 +33,7 @@ class AddCatalogRules implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [];
+        return [AddCustomBrand::class];
     }
 
     public function getAliases()

@@ -34,7 +34,7 @@ class AddScheduledHomePageChanges implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [AddCatalogRules::class];
+        return [AddCustomBrand::class,AddCatalogRules::class];
     }
 
     public function getAliases()

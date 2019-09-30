@@ -58,7 +58,7 @@ class AddHomePages implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [AddB2CSegments::class,AddDynamicBlocks::class,SetFeaturedAndSaleProducts::class];
+        return [AddCustomBrand::class,AddB2CSegments::class,AddDynamicBlocks::class,SetFeaturedAndSaleProducts::class];
     }
 
     public function getAliases()

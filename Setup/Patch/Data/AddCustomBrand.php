@@ -56,7 +56,7 @@ class AddCustomBrand implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [AddHomePages::class,AddScheduledHomePageChanges::class];
+        return [];
     }
 
     public function getAliases()

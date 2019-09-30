@@ -85,7 +85,7 @@ class SetFeaturedAndSaleProducts implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [ProductUpdates::class];
+        return [AddCustomBrand::class,ProductUpdates::class];
     }
 
     public function getAliases()
