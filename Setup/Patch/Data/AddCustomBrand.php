@@ -36,7 +36,6 @@ class AddCustomBrand implements DataPatchInterface
 
     public function apply()
     {
-            echo "installing " , get_class($this) , "\n";
             //Create Store
             $storeId = $this->storeCreate->setup('Custom', 'custom_b2c_store', 'Custom B2C Store',
                 'custom_b2c_us', 'Custom US English', false, 15);

@@ -31,7 +31,6 @@ class AddFavicons implements DataPatchInterface
 
     public function apply()
     {
-        echo "installing " , get_class($this) , "\n";
         foreach($this->storeSettings as $setting){
             $this->resourceConfig->saveConfig("design/head/shortcut_icon", "stores/".$setting['icon'], "stores",$this->store->getExistingStoreId($setting['storeview']));
         }

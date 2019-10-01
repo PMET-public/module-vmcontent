@@ -47,7 +47,7 @@ class ProductUpdates implements DataPatchInterface
 
     public function apply()
     {
-        echo "installing " , get_class($this) , "\n";
+
         $this->removeUpsellsFromCronusPants();
         ///add monogram to strive backpack
         $this->productImport->install(['MagentoEse_VMContent::fixtures/bag_monogram.csv']);

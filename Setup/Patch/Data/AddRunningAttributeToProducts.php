@@ -27,7 +27,6 @@ class AddRunningAttributeToProducts implements DataPatchInterface
 
 
     public function apply(){
-        echo "installing " , get_class($this) , "\n";
         $this->productAttributes->install(['MagentoEse_VMContent::fixtures/product_attributes_running.csv']);
     }
 

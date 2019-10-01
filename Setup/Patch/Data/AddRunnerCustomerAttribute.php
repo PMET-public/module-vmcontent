@@ -57,7 +57,6 @@ class AddRunnerCustomerAttribute implements DataPatchInterface
 
     public function apply()
     {
-        echo "installing " , get_class($this) , "\n";
         $useInForms=['adminhtml_customer','adminhtml_checkout','customer_account_edit','customer_account_create'];
         $attributeOptions = ['Running','Crossfit','Pilates','Yoga'];
         $attributeCode = 'preferred_activities';
