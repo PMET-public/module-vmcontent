@@ -1,6 +1,6 @@
 <?php
 /**
- * Copyright © 2016 Magento. All rights reserved.
+ * Copyright © 2019 Magento. All rights reserved.
  * See COPYING.txt for license details.
  */
 namespace MagentoEse\VMContent\Model;
@@ -8,6 +8,8 @@ namespace MagentoEse\VMContent\Model;
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 use Magento\VisualMerchandiser\Model\Rules;
 use Magento\Catalog\Api\Data\CategoryInterfaceFactory;
+use Magento\Catalog\Api\CategoryRepositoryInterface;
+use Magento\Catalog\Api\Data\CategoryInterface;
 use Magento\Catalog\Model\ResourceModel\Category\TreeFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Store\Api\Data\StoreInterfaceFactory;
@@ -57,6 +59,9 @@ class Category
     /** @var Rules  */
     protected $rules;
 
+    /** @var CategoryRepositoryInterface  */
+    protected $categoryRepository;
+
     /**
      * Category constructor.
      * @param SampleDataContext $sampleDataContext
@@ -65,13 +70,14 @@ class Category
      * @param StoreManagerInterface $storeManager
      * @param StoreInterfaceFactory $storeFactory
      * @param BlockInterfaceFactory $blockFactory
+     * @param CategoryRepositoryInterface $categoryRepository
      * @param Rules $rules
      */
 
     public function __construct(
         SampleDataContext $sampleDataContext, CategoryInterfaceFactory $categoryFactory,
         TreeFactory $resourceCategoryTreeFactory, StoreManagerInterface $storeManager,
-        StoreInterfaceFactory $storeFactory, BlockInterfaceFactory $blockFactory,
+        StoreInterfaceFactory $storeFactory, BlockInterfaceFactory $blockFactory, CategoryRepositoryInterface $categoryRepository,
         Rules $rules
     ) {
         $this->fixtureManager = $sampleDataContext->getFixtureManager();
@@ -82,6 +88,7 @@ class Category
         $this->storeFactory = $storeFactory;
         $this->blockFactory = $blockFactory;
         $this->rules = $rules;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -214,8 +221,11 @@ class Category
     protected function createCategory($row)
     {
         $category = $this->getCategoryByPath($row['path'] . '/' . $row['name'],$row['store']);
+        echo("got category\n");
         if (!$category) {
+            echo("no category\n");
             $parentCategory = $this->getCategoryByPath($row['path'],$row['store']);
+            echo($parentCategory->getId()." parent id\n");
             $data = [
                 'parent_id' => $parentCategory->getId(),
                 'name' => $row['name'],
@@ -225,14 +235,16 @@ class Category
                 'url_key' => $row['url_key'],
                 'store_id' => 0
             ];
+            /** @var CategoryInterface $category */
             $category = $this->categoryFactory->create();
             $category->setData($data)
                 ->setPath($parentCategory->getData('path'))
                 ->setAttributeSetId($category->getDefaultAttributeSetId());
             $this->setAdditionalData($row, $category);
-
+            echo("save category\n");
             $category->save();
-
+            $categoryId = $category->getId();
+            echo("set merch\n");
             //set Visual Merch conditions
             if($row['conditions_serialized']!=''){
                 $rule = $this->rules->loadByCategory($category);
@@ -242,10 +254,13 @@ class Category
                     'is_active' => '1',
                     'conditions_serialized' => $row['conditions_serialized']
                 ]);
+                echo("save rule\n");
                 $rule->save();
             }
             //second save is to trigger rule to run to  populate category
-            $category->save();
+            echo("save category\n");
+            $updatedCategory = $this->categoryRepository->get($categoryId);
+            $this->categoryRepository->save($updatedCategory);
 
         }
     }
