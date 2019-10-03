@@ -258,9 +258,9 @@ class Category
                 $rule->save();
             }
             //second save is to trigger rule to run to  populate category
-            echo("save category\n");
-            $updatedCategory = $this->categoryRepository->get($categoryId);
-            $this->categoryRepository->save($updatedCategory);
+           // echo("save category\n");
+            //$updatedCategory = $this->categoryRepository->get($categoryId);
+            //$this->categoryRepository->save($updatedCategory);
 
         }
     }
