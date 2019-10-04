@@ -221,11 +221,8 @@ class Category
     protected function createCategory($row)
     {
         $category = $this->getCategoryByPath($row['path'] . '/' . $row['name'],$row['store']);
-        echo("got category\n");
         if (!$category) {
-            echo("no category\n");
             $parentCategory = $this->getCategoryByPath($row['path'],$row['store']);
-            echo($parentCategory->getId()." parent id\n");
             $data = [
                 'parent_id' => $parentCategory->getId(),
                 'name' => $row['name'],
@@ -241,10 +238,8 @@ class Category
                 ->setPath($parentCategory->getData('path'))
                 ->setAttributeSetId($category->getDefaultAttributeSetId());
             $this->setAdditionalData($row, $category);
-            echo("save category\n");
             $category->save();
             $categoryId = $category->getId();
-            echo("set merch\n");
             //set Visual Merch conditions
             if($row['conditions_serialized']!=''){
                 $rule = $this->rules->loadByCategory($category);
@@ -254,7 +249,6 @@ class Category
                     'is_active' => '1',
                     'conditions_serialized' => $row['conditions_serialized']
                 ]);
-                echo("save rule\n");
                 $rule->save();
             }
             //second save is to trigger rule to run to  populate category
