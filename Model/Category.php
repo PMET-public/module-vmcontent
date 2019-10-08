@@ -239,18 +239,18 @@ class Category
                 ->setAttributeSetId($category->getDefaultAttributeSetId());
             $this->setAdditionalData($row, $category);
             $category->save();
-            $categoryId = $category->getId();
-            //set Visual Merch conditions
-            if($row['conditions_serialized']!=''){
-                $rule = $this->rules->loadByCategory($category);
-                $rule->setData([
-                    'rule_id' => $rule->getId(),
-                    'category_id' => $category->getId(),
-                    'is_active' => '1',
-                    'conditions_serialized' => $row['conditions_serialized']
-                ]);
-                $rule->save();
-            }
+//            $categoryId = $category->getId();
+//            //set Visual Merch conditions
+//            if($row['conditions_serialized']!=''){
+//                $rule = $this->rules->loadByCategory($category);
+//                $rule->setData([
+//                    'rule_id' => $rule->getId(),
+//                    'category_id' => $category->getId(),
+//                    'is_active' => '1',
+//                    'conditions_serialized' => $row['conditions_serialized']
+//                ]);
+//                $rule->save();
+//            }
             //second save is to trigger rule to run to  populate category
            // echo("save category\n");
             //$updatedCategory = $this->categoryRepository->get($categoryId);
