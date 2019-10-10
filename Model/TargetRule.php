@@ -115,7 +115,6 @@ class TargetRule
     public function install(array $fixtures,$isActive)
     {
         foreach ($fixtures as $linkTypeId => $fileName) {
-            echo($linkTypeId."\n");
             $fileName = $this->fixtureManager->getFixture($fileName);
             if (!file_exists($fileName)) {
                 continue;
