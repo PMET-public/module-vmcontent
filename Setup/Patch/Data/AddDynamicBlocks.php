@@ -32,7 +32,7 @@ class AddDynamicBlocks implements DataPatchInterface
 
     public static function getDependencies()
     {
-        return [AddCustomBrand::class,AddB2CSegments::class];
+        return [AddCustomBrand::class,AddB2CSegments::class,AddRunningAttributeToProducts::class];
     }
 
     public function getAliases()
