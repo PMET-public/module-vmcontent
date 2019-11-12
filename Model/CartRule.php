@@ -119,8 +119,9 @@ class CartRule
                 $rule = $this->ruleFactory->create();
                 $rule->loadPost($row);
                 $rule->save();
+                $foo = $rule->getRowId();
                 if($row['rewards']!=""){
-                    $this->reward->saveRewardSalesrule($rule->getRuleId(),$row['rewards']);
+                   $this->reward->saveRewardSalesrule($rule->getRowId(),$row['rewards']);
                 }
             }
         }

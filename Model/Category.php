@@ -223,22 +223,24 @@ class Category
         $category = $this->getCategoryByPath($row['path'] . '/' . $row['name'],$row['store']);
         if (!$category) {
             $parentCategory = $this->getCategoryByPath($row['path'],$row['store']);
-            $data = [
-                'parent_id' => $parentCategory->getId(),
-                'name' => $row['name'],
-                'is_active' => $row['active'],
-                'is_anchor' => $row['is_anchor'],
-                'include_in_menu' => $row['include_in_menu'],
-                'url_key' => $row['url_key'],
-                'store_id' => 0
-            ];
-            /** @var CategoryInterface $category */
-            $category = $this->categoryFactory->create();
-            $category->setData($data)
-                ->setPath($parentCategory->getData('path'))
-                ->setAttributeSetId($category->getDefaultAttributeSetId());
-            $this->setAdditionalData($row, $category);
-            $category->save();
+            if($parentCategory) {
+                $data = [
+                    'parent_id' => $parentCategory->getId(),
+                    'name' => $row['name'],
+                    'is_active' => $row['active'],
+                    'is_anchor' => $row['is_anchor'],
+                    'include_in_menu' => $row['include_in_menu'],
+                    'url_key' => $row['url_key'],
+                    'store_id' => 0
+                ];
+                /** @var CategoryInterface $category */
+                $category = $this->categoryFactory->create();
+                $category->setData($data)
+                    ->setPath($parentCategory->getData('path'))
+                    ->setAttributeSetId($category->getDefaultAttributeSetId());
+                $this->setAdditionalData($row, $category);
+                $category->save();
+            }
 //            $categoryId = $category->getId();
 //            //set Visual Merch conditions
 //            if($row['conditions_serialized']!=''){
