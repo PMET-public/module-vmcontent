@@ -85,7 +85,12 @@ class AddRunnerCustomerAttribute implements DataPatchInterface
         $customer = $this->customerRepository->get($email);
         $id = $this->getOptionCode($attributeCode,$value);
         $customer->setCustomAttribute($attributeCode,$id);
-        $this->customerRepository->save($customer);
+        try{
+            $this->customerRepository->save($customer);
+        } catch (\Exception $exception){
+
+        }
+
     }
     public function getOptionCode($attributeCode,$textValue){
         $attribute = $this->attributeRepository->get(Customer::ENTITY,$attributeCode);

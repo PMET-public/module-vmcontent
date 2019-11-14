@@ -152,21 +152,28 @@ class Category
      */
     protected function getCategoryByPath($path,$storeIdentifier)
     {
+
         $store = $this->storeFactory->create();
         $store->load($storeIdentifier);
-        $rootCatId = $store->getGroup()->getDefaultStore()->getRootCategoryId();
-        $names = array_filter(explode('/', $path));
-        $tree = $this->getTree($rootCatId);
-        foreach ($names as $name) {
-            $tree = $this->findTreeChild($tree, $name);
-            if (!$tree) {
-                $tree = $this->findTreeChild($this->getTree($rootCatId, true), $name);
+        $storeId = $store->getId();
+        if($storeId){
+            $rootCatId = $store->getGroup()->getDefaultStore()->getRootCategoryId();
+            $names = array_filter(explode('/', $path));
+            $tree = $this->getTree($rootCatId);
+            foreach ($names as $name) {
+                $tree = $this->findTreeChild($tree, $name);
+                if (!$tree) {
+                    $tree = $this->findTreeChild($this->getTree($rootCatId, true), $name);
+                }
+                if (!$tree) {
+                    break;
+                }
             }
-            if (!$tree) {
-                break;
-            }
+            return $tree;
+        }else{
+            return null;
         }
-        return $tree;
+
     }
 
     /**

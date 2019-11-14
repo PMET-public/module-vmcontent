@@ -81,10 +81,15 @@ class ProductAttributes
                 }
                 $row = $data;
 
-                $product = $this->productRepository->get($row['sku']);
-                $product->setCustomAttribute($row['attribute'],$this->replaceIds->getAttributeOptionValueByCode($row['attribute'],$row['value']));
-                //$product->setCustomAttribute($row['attribute'],'6');
-                $this->productRepository->save($product);
+                try{
+                    $product = $this->productRepository->get($row['sku']);
+                    $product->setCustomAttribute($row['attribute'],$this->replaceIds->getAttributeOptionValueByCode($row['attribute'],$row['value']));
+                    //$product->setCustomAttribute($row['attribute'],'6');
+                    $this->productRepository->save($product);
+                }catch(\Exception $exception){
+                    //skip if product doesnt exist
+                }
+
             }
         }
     }

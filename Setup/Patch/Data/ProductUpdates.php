@@ -65,13 +65,19 @@ class ProductUpdates implements DataPatchInterface
 
     private function removeUpsellsFromCronusPants()
     {
-        $product = $this->productRepository->get('MP12');
-        /** @var ProductLinkInterface $productLinks */
-        $productLinks = $this->productLinkRepository->getList($product);
-        /** @var  $productLink */
-        foreach ($productLinks as $productLink) {
-            $this->productLinkRepository->delete($productLink);
+        try{
+            $product = $this->productRepository->get('MP12');
+            /** @var ProductLinkInterface $productLinks */
+            $productLinks = $this->productLinkRepository->getList($product);
+            /** @var  $productLink */
+            foreach ($productLinks as $productLink) {
+                $this->productLinkRepository->delete($productLink);
+            }
         }
+        catch(\Exception $exception){
+            //skip if product doesnt exist
+        }
+
     }
 
     private function addMonogramOption()
