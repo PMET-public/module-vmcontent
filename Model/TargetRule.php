@@ -254,7 +254,10 @@ class TargetRule
                 //delete bad rules
                 /** @var RuleModel $collection */
                 $ruleToDelete  = $rule->getResourceCollection()->addFilter('name', $adjustedName)->getFirstItem();
-                $ruleToDelete->delete();
+                if($ruleToDelete->getSize()!=0){
+                    $ruleToDelete->delete();
+                }
+
 
             }
         }
