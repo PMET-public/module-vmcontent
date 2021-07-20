@@ -17,7 +17,8 @@ use Magento\Staging\Api\UpdateRepositoryInterface;
 use Magento\Staging\Model\VersionManagerFactory;
 use Magento\Staging\Api\Data\UpdateInterface;
 use Magento\Cms\Api\Data\PageInterface;
-
+use Magento\Framework\App\State as AppState; 
+use Magento\Framework\App\Area as AppArea;
 
 class Staging
 {
@@ -60,13 +61,17 @@ class Staging
     /** @var CatalogRuleCollection  */
     private $catalogRuleCollection;
 
+    /** @var AppState  */
+    private $appState;
+
 
     public function __construct(ProductStagingInterface $productStaging, BlockStagingInterface $blockStaging,
                                 PageStagingInterface $pageStaging, SampleDataContext $sampleDataContext,
                                 UpdateInterfaceFactory $updateInterfaceFactory, UpdateRepositoryInterface $updateRepositoryInterface,
                                 VersionManagerFactory $versionManagerFactory, PageRepositoryInterface $pageRepository,
                                 SearchCriteriaBuilder $searchCriteriaBuilder, ReplaceIds $replaceIds,
-                                CatalogRuleCollection $catalogRuleCollection, CatalogRuleStagingInterface $catalogRuleStaging)
+                                CatalogRuleCollection $catalogRuleCollection, CatalogRuleStagingInterface $catalogRuleStaging,
+                                AppState $appState)
     {
         $this->productStaging = $productStaging;
         $this->blockStaging = $blockStaging;
@@ -81,6 +86,7 @@ class Staging
         $this->replaceIds = $replaceIds;
         $this->catalogRuleCollection= $catalogRuleCollection;
         $this->catalogRuleStaging = $catalogRuleStaging;
+        $this->appState = $appState;
     }
 
     public function addScheduledUpdates($fixtures){
@@ -199,7 +205,12 @@ class Staging
         $rule = $ruleCollection->addFilter('name',$ruleData['identifier'],'eq')->getFirstItem();
         $rule->setIsActive(1);
         try {
-            $this->catalogRuleStaging->schedule($rule,$stagingId);
+            //$this->catalogRuleStaging->schedule($rule,$stagingId);
+            $this->appState->emulateAreaCode(
+                AppArea::AREA_ADMINHTML,
+                [$this->catalogRuleStaging, 'schedule'],
+                [$rule,$stagingId]
+            );
         }catch(ValidatorException $e){
             //ignore as it indicated already scheduled
         }
