@@ -57,7 +57,7 @@ class CustomerAttributes
         $eavSetup->addAttributeToSet(
             CustomerMetadataInterface::ENTITY_TYPE_CUSTOMER,
             CustomerMetadataInterface::ATTRIBUTE_SET_ID_CUSTOMER,
-            null,
+            'general',
             $attributeCode);
 
         if($attributeOptions){
