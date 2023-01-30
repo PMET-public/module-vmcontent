@@ -1,8 +1,11 @@
 {
   "name": "magentoese/module-vmcontent",
   "description": "",
+  "version": "2.0.0",
   "require": {
-    "magentoese/module-customer-sample-data": "*"
+    "magentoese/module-customer-sample-data": "*",
+    "magento/framework": "*",
+    "magentoese/module-data-install": "*"
   },
   "type": "magento2-module",
   "license": [

@@ -14,6 +14,7 @@
             <module name="MagentoEse_MsiInventorySampleDataDemo"/>
             <module name="Magento_TargetRuleSampleData"/>
             <module name="MagentoEse_ProductSampleDataUpdate"/>
+            <module name="MagentoEse_DataInstall"/>
         </sequence>
     </module>
 </config>
