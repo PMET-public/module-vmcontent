@@ -15,6 +15,8 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Store\Api\Data\StoreInterfaceFactory;
 use Magento\Cms\Api\Data\BlockInterfaceFactory;
 use \Magento\Framework\Data\Tree\Node;
+use Magento\Framework\File\Csv;
+
 /**
  * Class Category
  */
@@ -61,6 +63,12 @@ class Category
 
     /** @var CategoryRepositoryInterface  */
     protected $categoryRepository;
+
+    /**
+     * 
+     * @var Csv
+     */
+    protected $csvReader;
 
     /**
      * Category constructor.

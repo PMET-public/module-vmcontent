@@ -8,6 +8,7 @@ namespace MagentoEse\VMContent\Model;
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 use Magento\CustomerSegment\Model\SegmentFactory;
 use Magento\CustomerSegment\Model\Segment as SegmentModel;
+use Magento\Framework\File\Csv;
 use MagentoEse\VMContent\Model\ReplaceIds;
 
 /**
@@ -32,6 +33,12 @@ class Segment
 
     /** @var \MagentoEse\VMContent\Model\ReplaceIds  */
     private $replaceIds;
+
+    /**
+     * 
+     * @var Csv
+     */
+    private $csvReader;
 
 
     /**

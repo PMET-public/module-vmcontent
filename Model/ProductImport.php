@@ -5,8 +5,11 @@
  */
 namespace MagentoEse\VMContent\Model;
 
+use Magento\Framework\File\Csv;
 use Magento\Framework\Setup\SampleData\Context as SampleDataContext;
 use Magento\Framework\ObjectManagerInterface;
+use Magento\Framework\Setup\SampleData\FixtureManager;
+
 /**
  * Class Product
  *
@@ -14,10 +17,35 @@ use Magento\Framework\ObjectManagerInterface;
  */
 class ProductImport
 {
+    /**
+     * 
+     * @var SampleDataContext
+     */
+    protected $SampleDataContext;
 
-    protected $sampleDataContext;
-    protected $eavConfig;
+    /**
+     * 
+     * @var ObjectManagerInterface
+     */
     protected $objectManager;
+
+    /**
+     * 
+     * @var FixtureManager
+     */
+    protected $fixtureManager;
+
+    /**
+     * 
+     * @var Csv
+     */
+    protected $csvReader;
+
+    /**
+     * 
+     * @var MagentoEse\DataInstall\Model\Import\Importer\Importer
+     */
+    protected $importerModel;
 
     /**
      * ProductImport constructor.

@@ -1,7 +1,7 @@
 {
   "name": "magentoese/module-vmcontent",
   "description": "",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "require": {
     "magentoese/module-customer-sample-data": "*",
     "magento/framework": "*",
